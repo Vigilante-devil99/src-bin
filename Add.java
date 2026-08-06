@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Add {
 
-    // Simple pair holder since Java has no built-in std::pair equivalent
+ 
     private static class Pair<A, B> {
         A first;
         B second;
