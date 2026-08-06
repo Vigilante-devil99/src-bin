@@ -1,11 +1,8 @@
  
-/*
- * Sparse Matrix implementation using Triplet (3-column) representation.
- * Supports: convert from normal matrix -> sparse, display, transpose, addition.
- */
+
 public class SparseMatrix {
  
-    // ---------- 1. Convert a normal 2D matrix into sparse (triplet) form ----------
+    
     static int[][] toSparse(int[][] matrix, int rows, int cols) {
         int nonZeroCount = 0;
         for (int i = 0; i < rows; i++)
@@ -14,7 +11,7 @@ public class SparseMatrix {
                 if (matrix[i][j] != 0)
                     nonZeroCount++;
  
-        // +1 row for the header: (rows, cols, nonZeroCount)
+    
         int[][] sparse = new int[nonZeroCount + 1][3];
         sparse[0][0] = rows;
         sparse[0][1] = cols;
@@ -33,8 +30,7 @@ public class SparseMatrix {
         }
         return sparse;
     }
- 
-    // ---------- 2. Display sparse matrix (triplet form) ----------
+
     static void displaySparse(int[][] sparse) {
         System.out.println("Row\tCol\tValue");
         for (int[] triple : sparse) {
@@ -42,7 +38,7 @@ public class SparseMatrix {
         }
     }
  
-    // ---------- 3. Reconstruct the original matrix from sparse form ----------
+
     static void displayAsMatrix(int[][] sparse) {
         int rows = sparse[0][0];
         int cols = sparse[0][1];
@@ -62,9 +58,7 @@ public class SparseMatrix {
         }
     }
  
-    // ---------- 4. Transpose of a sparse matrix ----------
-    // Fast transpose: builds result directly in row-major order of the transpose,
-    // avoiding the O(cols * nonZero) cost of the naive approach.
+
     static int[][] transpose(int[][] sparse) {
         int rows = sparse[0][0];
         int cols = sparse[0][1];
@@ -90,22 +84,21 @@ public class SparseMatrix {
         for (int i = 1; i <= nonZero; i++) {
             int col = sparse[i][1];
             int pos = colIndex[col];
-            result[pos][0] = sparse[i][1];   // new row = old col
-            result[pos][1] = sparse[i][0];   // new col = old row
+            result[pos][0] = sparse[i][1];  
+            result[pos][1] = sparse[i][0];  
             result[pos][2] = sparse[i][2];
             colIndex[col]++;
         }
         return result;
     }
  
-    // ---------- 5. Addition of two sparse matrices ----------
-    static int[][] add(int[][] a, int[][] b) {
+   
         if (a[0][0] != b[0][0] || a[0][1] != b[0][1]) {
             throw new IllegalArgumentException("Matrix dimensions must match for addition.");
         }
  
         int rows = a[0][0], cols = a[0][1];
-        int[][] full = new int[rows][cols]; // temp dense buffer to combine values
+        int[][] full = new int[rows][cols];
  
         for (int i = 1; i < a.length; i++)
             full[a[i][0]][a[i][1]] += a[i][2];
@@ -115,7 +108,7 @@ public class SparseMatrix {
         return toSparse(full, rows, cols);
     }
  
-    // ---------- Demo ----------
+  
     public static void main(String[] args) {
         int[][] matrixA = {
             {0, 0, 3, 0},
