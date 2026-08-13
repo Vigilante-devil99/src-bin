@@ -1,0 +1,101 @@
+class CircularLinkedList {
+    
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    private Node last = null;
+
+    public void traverse() {
+        if (last == null) {
+            System.out.println("List is empty");
+            return;
+        }
+        Node head = last.next;
+        Node temp = head;
+        System.out.print("List: ");
+        do {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        } while (temp != head);
+        System.out.println("(back to head: " + head.data + ")");
+    }
+
+    public void insert(int data) {
+        Node newNode = new Node(data);
+        if (last == null) {
+            last = newNode;
+            last.next = last;
+            return;
+        }
+        newNode.next = last.next;
+        last.next = newNode;
+        last = newNode;
+    }
+
+    public void delete(int key) {
+        if (last == null) return;
+
+        Node head = last.next;
+        Node curr = head;
+        Node prev = last;
+
+        if (curr == last && curr.data == key) {
+            last = null;
+            return;
+        }
+
+        do {
+            if (curr.data == key) {
+                prev.next = curr.next;
+                if (curr == last) {
+                    last = prev;
+                }
+                return;
+            }
+            prev = curr;
+            curr = curr.next;
+        } while (curr != head);
+
+        System.out.println("Value " + key + " not found.");
+    }
+
+    public void reverse() {
+        if (last == null || last.next == last) return;
+
+        Node head = last.next;
+        Node prev = last;
+        Node curr = head;
+        Node next;
+
+        do {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        } while (curr != head);
+
+        last = head;
+    }
+
+    public static void main(String[] args) {
+        CircularLinkedList cll = new CircularLinkedList();
+
+        cll.insert(10);
+        cll.insert(20);
+        cll.insert(30);
+        cll.insert(40);
+        cll.traverse();
+
+        cll.delete(20);
+        cll.traverse();
+
+        cll.reverse();
+        cll.traverse();
+    }
+}
