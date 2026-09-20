@@ -48,7 +48,7 @@ class AVLTree {
         if (node == null) return new Node(key);
         if (key < node.key) node.left = insert(node.left, key);
         else if (key > node.key) node.right = insert(node.right, key);
-        else return node; // Duplicate keys not allowed
+        else return node;
 
      
         node.height = 1 + Math.max(height(node.left), height(node.right));
