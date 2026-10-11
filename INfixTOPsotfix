@@ -1,0 +1,57 @@
+Global index = 0
+Global tokens = []
+
+Function infixToPostfixRecursive(expr):
+    tokens = tokenize(expr)
+    index = 0
+    Return parseExpression()
+
+
+Function parseExpression():
+    postfix = parseTerm()
+    
+    While index < length(tokens) AND (tokens[index] == '+' OR tokens[index] == '-'):
+        op = tokens[index]
+        index = index + 1
+        nextTerm = parseTerm()
+      
+        postfix = postfix + " " + nextTerm + " " + op
+        
+    Return postfix
+
+
+Function parseTerm():
+    postfix = parseFactor()
+    
+    While index < length(tokens) AND (tokens[index] == '*' OR tokens[index] == '/'):
+        op = tokens[index]
+        index = index + 1
+        nextFactor = parseFactor()
+        postfix = postfix + " " + nextFactor + " " + op
+        
+    Return postfix
+
+
+Function parseFactor():
+    base = parsePrimary()
+    
+    If index < length(tokens) AND tokens[index] == '^':
+        op = tokens[index]
+        index = index + 1
+       
+        exponent = parseFactor()
+        Return base + " " + exponent + " " + op
+        
+    Return base
+
+
+Function parsePrimary():
+    token = tokens[index]
+    index = index + 1
+    
+    If token == '(':
+        subExpr = parseExpression()
+        index = index + 1   
+        Return subExpr
+    Else:
+        Return token        
