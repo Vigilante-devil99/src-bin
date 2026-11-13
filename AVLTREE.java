@@ -76,6 +76,6 @@ class AVLTree {
             return leftRotate(node);
         }
 
-        return node;
+        return node
     }
 }
