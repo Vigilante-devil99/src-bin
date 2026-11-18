@@ -18,6 +18,7 @@ public class DynamicArray {
             resize(data.length * 2);
         }
         data[size++] = element;
+        
     }
 
     public int get(int index) {
